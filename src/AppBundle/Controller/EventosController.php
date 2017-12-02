@@ -6,19 +6,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class EventosController extends Controller
 {
     /**
-     * @Route("/a", name="homepage")
+     * @Route("/eventos/", name="eventos")
      */
     public function indexAction(Request $request)
     {
+        
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig');
+        return $this->render('AppBundle:Eventos:eventos.html.twig');
+        return $this->render('AppBundle:Boletos:boletos.html.twig');
     }
-    
-    
-    
-    
-    
+
 }

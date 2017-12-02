@@ -52,7 +52,7 @@ class Usuario
     /**
      * @var array
      *
-     * @ORM\Column(name="tipo_usuario", type="simple_array")
+     * @ORM\Column(name="tipo_usuario", type="string")
      */
     private $tipoUsuario;
 
