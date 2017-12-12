@@ -18,7 +18,7 @@ class EstudianteType extends AbstractType
         $builder
             ->add('nombre')
             ->add('edad')
-            ->add('fechaNacimiento',DateType::class,array ('widget'=>'single_text','format'=>'yyyy-MM-dd'))
+          //  ->add('fechaNacimiento',DateType::class,array ('widget'=>'single_text','format'=>'yyyy-MM-dd'))
 
         ;
     }
@@ -31,7 +31,7 @@ class EstudianteType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Estudiante',
             'csrf_protection'=>false,
-            'allow_extra_field'=>false
+            'allow_extra_fields'=>true
 
         ));
     }

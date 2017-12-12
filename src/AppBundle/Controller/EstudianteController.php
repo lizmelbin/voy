@@ -25,12 +25,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
  */
 class EstudianteController extends Controller
 {
-    /**
-     * @Route("/listas", name="crear_estudiante")
-     * @param Request $request
-     * @Method("GET")
-     * @return \Symfony\component\HttpFoundation\Response
-      */
+
 
     /**
      * @Route("/listas", name="crear_estudiante")
@@ -39,7 +34,7 @@ class EstudianteController extends Controller
      */
     public function listarEstudiante(Request $request){
 
-        return $this->render('AppBundle:Estudiante:estudiante_lista.html.twig');
+        return $this->render('AppBundle:Estudiante:Estudiante_lista.html.twig');
 
     }
     /**
@@ -76,6 +71,37 @@ class EstudianteController extends Controller
     }
 
     /**
+     * @Route("/{id}",name="update_estudiante")
+     * @Method("PUT")
+     * @param Request $request
+     * @param  Estudiante $estudiante
+     * @return JsonResponse
+     */
+    public function updateEstudiante(Request $request,Estudiante $estudiante){
+        //dump($request->getContent());
+        //die;
+        $data=json_decode($request->getContent(),true);
+        $form =$this->createForm(EstudianteType::class, $estudiante);
+        $form->submit($data);
+        if($form->isValid()){
+            echo "siiiiiiiiiiii";
+            $em=$this->getDoctrine()->getManager();
+
+            $em->flush();
+        }else{
+            dump($form->getErrorsAsString());
+            echo "nooooooooo";
+        }
+        die;
+        //para mostrar el objeto estudiante en la respuesta, como un Objeto del tipo Estudiante
+        // dump($estudiante);
+        //para devolverlo como un JSON//
+        $data= $this->get("serializer")->serialize($estudiante,'json');
+        $newEstudiante=json_decode($data,true);
+        return new JsonResponse($newEstudiante);
+    }
+
+    /**
      * @Route("/lista",name="todosLosEstudiantes")
      * @Method("GET")
      * @param Request $request
@@ -87,10 +113,6 @@ class EstudianteController extends Controller
 
         $listaEstudiantes=json_decode($data,true);
         return new JsonResponse($listaEstudiantes);
-
-
-
-
     }
 
 
@@ -107,5 +129,20 @@ class EstudianteController extends Controller
 
     }
 
+
+    /**
+     * @Route("/{id}/edit",name="EditarUnEstiante")
+     * @Method("GET")
+     * @param Request $request
+     * @param  Estudiante $estudiante
+     * @return JsonResponse
+     */
+    public function EditEstudiante(Request $request,Estudiante $estudiante){
+        //TODO: buscar lista de estudiante en la base de datos
+        //$estudiantes=$this->getDoctrine()->getRepository(Estudiante::class)->findAll();
+       // $estudiante= $this->get("serializer")->serialize($estudiante,'json');
+        return $this->render('AppBundle:Estudiante:edit_estudiantes.html.twig',array('estudiante'=>$estudiante,));
+
+    }
 
 }
