@@ -71,7 +71,7 @@ class UsuarioController extends Controller
         $form->submit($data);
 
         if($form->isValid()){
-            dump($usuario);
+           // dump($usuario);
 //            die;
   //           echo "siiiiiiiiiiii";
             $em=$this->getDoctrine()->getManager();
@@ -96,6 +96,25 @@ class UsuarioController extends Controller
 
     }
 
+
+
+    /**
+     * @Route("/",name="todosLosUsuarios")
+     * @Method("GET")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getEstudiantes(Request $request){
+        $usuario=$this->getDoctrine()->getRepository(Usuario::class )->findAll();
+        $data= $this->get("serializer")->serialize($usuario,'json');
+
+        $listaUsuario=json_decode($data,true);
+        return new JsonResponse($listaUsuario);
+
+
+
+
+    }
 
 
 }

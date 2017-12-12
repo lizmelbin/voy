@@ -21,10 +21,27 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * Class EstudianteController
  * @package AppBundle\Controller
- * @Route("/estudiante")
+ * @Route("/estudiantes")
  */
 class EstudianteController extends Controller
 {
+    /**
+     * @Route("/listas", name="crear_estudiante")
+     * @param Request $request
+     * @Method("GET")
+     * @return \Symfony\component\HttpFoundation\Response
+      */
+
+    /**
+     * @Route("/listas", name="crear_estudiante")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listarEstudiante(Request $request){
+
+        return $this->render('AppBundle:Estudiante:estudiante_lista.html.twig');
+
+    }
     /**
      * @Route("/", name="crear_estudiante")
      * @Method("POST")
@@ -59,7 +76,7 @@ class EstudianteController extends Controller
     }
 
     /**
-     * @Route("/",name="todosLosEstudiantes")
+     * @Route("/lista",name="todosLosEstudiantes")
      * @Method("GET")
      * @param Request $request
      * @return JsonResponse
@@ -75,4 +92,20 @@ class EstudianteController extends Controller
 
 
     }
+
+
+    /**
+     * @Route("/listado",name="todosLosEstudiantes")
+     * @Method("GET")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function ListarEstudiantes(Request $request){
+     //TODO: buscar lista de estudiante en la base de datos
+        $estudiantes=$this->getDoctrine()->getRepository(Estudiante::class)->findAll();
+        return $this->render('AppBundle:Estudiante:Estudiante_lista.html.twig',array('estudiantes'=>$estudiantes,));
+
+    }
+
+
 }
